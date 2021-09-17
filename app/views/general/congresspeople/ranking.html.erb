@@ -1,0 +1,23 @@
+<div class="w3-container" id="designers" style="margin-top:75px">
+  <h1 class="w3-xxxlarge w3-text-red"><b>Deputados.</b></h1>
+  <hr style="width:50px;border:5px solid #17a2b8" class="w3-round">
+  <p>Ranking dos deputados</p>
+  <p></p>
+  <p><b>Considerando do que gastou mais para o que gastou menos</b>:</p>
+</div>
+
+<div class="w3-row-padding w3-grayscale">
+  <% @congresspeople.each.with_index do |rank, index| %>
+    <div class="w3-col m4 w3-margin-bottom">
+      <img src="<%= "http://www.camara.leg.br/internet/deputado/bandep/#{rank[0].ide_registration}.jpg" %>" alt="Deputado" style="width:30%; border-radius: 8px; margin-bottom: 10px">
+      <div class="w3-light-grey" style="border-radius: 8px;">
+        <div class="w3-container" style="background: #17a2b8; border-radius: 8px;">
+          <h3 style="color: #ffffff; padding-top: 5px"><%= "#{rank[0].name}" %></h3>
+          <p class="w3-opacity"><%= rank[0].political_party %></p>
+
+          <p style="font-weight: bold; color: #6c00ff"><%= "#{number_to_currency(rank[1], unit: "R$")}" %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

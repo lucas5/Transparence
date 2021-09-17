@@ -1,0 +1,10 @@
+<div class="w3-container" id="contact" style="margin-top:75px">
+  <h1 class="w3-xxxlarge w3-text-red"><b>Carregar dados.</b></h1>
+  <hr style="width:50px;border:5px solid #17a2b8" class="w3-round">
+  <p>Faça o upload do arquivo .csv, que contém os dados!</p>
+
+  <%= form_tag({:action => :import}, multipart: true) do %>
+    <%= file_field_tag :file, style: 'padding-bottom: 10px' %>
+    <%= submit_tag( "Fazer upload", class: 'w3-button w3-block w3-padding-large w3-red w3-margin-bottom', style: 'border-radius: 8px' ) %>
+  <% end %>
+</div>

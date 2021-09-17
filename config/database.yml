@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: 127.0.0.1
+  username: postgres
+  password: 'postgres'
+  port: 5432
+  schema: public
+
+development:
+  <<: *default
+  database: transparence_app_dev
+
+test:
+  <<: *default
+  database: transparence_app_test
+
+production:
+  <<: *default
+  database: production
