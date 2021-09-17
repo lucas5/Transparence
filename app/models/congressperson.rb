@@ -2,8 +2,15 @@ class Congressperson < ApplicationRecord
   has_many :spendings, class_name: 'Spending'
 
   # Returns an array of objects with the deputies and the sum total of all their expenses
-  def self.rank
-    Spending.joins(:congressperson).order("sum_net_value DESC").group(:congressperson).sum(:net_value)
+  def self.rank(year = Time.current.year, estado = "SE")
+    Spending.joins(:congressperson).where(num_year: year).where("congresspeople.sg_uf = ?", estado)
+            .order("sum_net_value DESC").group(:congressperson).sum(:net_value)
+  end
+
+  # Returns a list of deputies filtered by year and state
+  def self.list_congresspeople(year = Time.current.year, estado = "SE")
+    year = year.present? ? year : Time.current.year
+    joins(:spendings).where("spendings.num_year = ?", year).where(sg_uf: estado).order(:name).distinct
   end
 
   # Create a deputy based on imported csv data
@@ -11,6 +18,7 @@ class Congressperson < ApplicationRecord
     congresspeople.each do |congressperson|
       sg_uf = congressperson[5].strip.delete('"')
       next unless sg_uf == "SE"
+
       cp = Congressperson.find_or_create_by(name: congressperson[0].strip.delete('"'),
                                             cpf: congressperson[1].strip.delete('"'),
                                             ide_registration: congressperson[2].strip.delete('"'),

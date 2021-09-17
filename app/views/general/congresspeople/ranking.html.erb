@@ -3,6 +3,32 @@
   <hr style="width:50px;border:5px solid #17a2b8" class="w3-round">
   <p>Ranking dos deputados</p>
   <p></p>
+  <%= form_for :congressperson, method: :get do |f| %>
+    <div class="form-inline" style="padding-bottom: 10px">
+      <div class="form-group">
+        <%= f.collection_select(
+              :year, years_to_select, :first, :first,
+              { prompt: 'Ano', selected: params[:year].present? ? params[:year] : nil },
+              { class: 'form-control input-sm', style: 'padding-top: 0; min-width: 170px', name: :year }
+            ) %>
+        <%= f.collection_select(
+              :estado, ::Util::EstadosBrasileiros::ESTADOS.collect { |c| [c[1], c[0]] }, :first, :last,
+              { prompt: 'Estado', selected: params[:estado].present? ? params[:estado] : nil },
+              { class: 'form-control input-sm', id: 'estado-id',
+                style: 'padding-top: 0; min-width: 170px; margin-left: 10px; margin-right: 10px',
+                name: :estado }
+            ) %>
+      </div>
+
+      <button class="btn btn-sm btn-default table-search" style="background: #743dbf; color: white; height: 35px;">
+        <i class="fa fa-search" style="color: white"></i> Buscar
+      </button>
+
+      <% if params[:estado].present? || params[:year].present? %>
+        <%= link_to 'Limpar', general_ranking_path, class: 'btn btn-sm btn-default table-search' %>
+      <% end %>
+    </div>
+  <% end %>
   <p><b>Considerando do que gastou mais para o que gastou menos</b>:</p>
 </div>
 

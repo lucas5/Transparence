@@ -6,7 +6,26 @@
   </div>
   <h1 class="w3-xxxlarge w3-text-red"><b>Lista de despesas.</b></h1>
   <hr style="width:50px;border:5px solid #17a2b8" class="w3-round">
-  <p>Lista de deputados da sua região, ordenados de maior gasto até menor gasto.</p>
+  <p>Lista das despesas do deputado <b><%= @congressperson.name %></b>, ordenadas da maior despesa até menor:</p>
+  <%= form_for :congressperson, method: :get do |f| %>
+    <div class="form-inline" style="padding-bottom: 10px">
+      <div class="form-group">
+        <%= f.collection_select(
+              :year, years_to_select, :first, :first,
+              { prompt: 'Ano', selected: params[:year].present? ? params[:year] : nil },
+              { class: 'form-control input-sm', style: 'padding-top: 0; min-width: 170px; margin-right: 10px', name: :year }
+            ) %>
+      </div>
+
+      <button class="btn btn-sm btn-default table-search" style="background: #743dbf; color: white; height: 35px;">
+        <i class="fa fa-search" style="color: white"></i> Buscar
+      </button>
+
+      <% if params[:year].present? %>
+        <%= link_to 'Limpar', general_congressperson_path(id: params[:id]), class: 'btn btn-sm btn-default table-search' %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
 <div style="margin-bottom: 30px;">
