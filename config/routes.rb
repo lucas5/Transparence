@@ -4,11 +4,9 @@ Rails.application.routes.draw do
 
   namespace :general do
     resources :home
-    resources :congresspeople
+    resources :congresspeople, :only => [:index, :show]
     resources :upload_csv
-
     post '/import/', to: 'upload_csv#import', as: 'import'
     get '/congresspeople_ranking/', to: 'congresspeople#ranking', as: 'ranking'
   end
-
 end
