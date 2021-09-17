@@ -12,6 +12,5 @@ module General
         redirect_to general_upload_csv_index_path, notice: 'O formato do arquivo, não é csv!'
       end
     end
-
   end
 end
